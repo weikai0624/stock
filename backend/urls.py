@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth import views
 from django.shortcuts import redirect
 from django.urls import path, include, re_path
 from django.views.generic.base import RedirectView
@@ -26,6 +27,9 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/swagger/') ),
     path('admin/', admin.site.urls),
     path('v1/',include('v1.urls')),
+    path('accounts/login/', views.LoginView.as_view(), name='login'),
+    path('accounts/logout/', views.LogoutView.as_view() ),
+
 ]
 
 schema_view = get_schema_view(
