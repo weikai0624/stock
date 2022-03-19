@@ -1,0 +1,9 @@
+{
+    "SECRET_KEY": "django-insecure-qmq4l#2)h9_!us=2^kw6n&rs$=-wbckvn=$k-2(asbcsf!mey2",
+    "DB_ENGINE" :"django.db.backends.postgresql_psycopg2",
+    "DB_NAME":  "stock",
+    "DB_USERNAME": "stock",
+    "DB_PASSWORD" : "stock",
+    "DB_HOST" :"127.0.0.1",
+    "DB_PORT" :"5432"
+}
