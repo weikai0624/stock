@@ -1,4 +1,6 @@
+import email
 import os
+from random import sample
 import sys
 import json
 import django
@@ -7,7 +9,7 @@ from datetime import datetime
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "stock.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 django.setup()
 
 from django.conf import settings
@@ -73,20 +75,29 @@ def delete_seeds(delete_bool):
         delete_table_data(ObjectData)
         delete_table_data(CompanyProfile)
         delete_table_data(ClassifyType)
+        delete_table_data(User)
 
 def create_seeds(create_bool):
     # all_info_data = FinMind(FIN_TOKEN).all_info()
-    all_compony_info_data = read_json('..\\external\sample_data\\TaiwanStockInfo.json')
+
+    sample_data_path = os.path.join(settings.BASE_DIR,'tools','external','sample_data')
+
+    all_compony_info_data = read_json(os.path.join(sample_data_path,'TaiwanStockInfo.json'))
     classify_type_data = create_classify_type(all_compony_info_data)
     ClassifyType.objects.bulk_create(classify_type_data)
 
     company_data = create_company(all_compony_info_data)
     CompanyProfile.objects.bulk_create(company_data)
 
-    one_compony_info_data = read_json('..\\external\sample_data\\ALL.json')
+    one_compony_info_data = read_json(os.path.join(sample_data_path,'ALL.json'))
     objects_data = create_objects_data(one_compony_info_data)
     ObjectData.objects.bulk_create(objects_data)
 
+    create_users()
+
+
+def create_users():
+    User.objects.create_superuser(username='weikai', password='weikai', email=None)
 
 def Main():
     delete_seeds(True)
