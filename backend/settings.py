@@ -23,6 +23,7 @@ if os.path.isfile(CONFIG_PATH):
         CONFIG = json.load(conf)
 else:
     CONFIG = {}
+os.environ.update(CONFIG)
 
 
 

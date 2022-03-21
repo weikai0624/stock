@@ -1,0 +1,16 @@
+version: '3.8'
+
+services: 
+    web:
+        build: ./stock
+        container_name: stock_web
+        restart: always
+        # command: [ "/bin/bash", "-c", "uwsgi --ini uwsgi.ini" ]
+        volumes:
+            # Using for production that could share the named volume for other services.
+            - web_data:/stock
+        environment:
+            - PYTHONUNBUFFERED=TURE
+
+volumes:
+    web_data:
