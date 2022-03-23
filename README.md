@@ -10,33 +10,7 @@ https://finmindtrade.com/
 
 並使用 Pyecharts 進行繪圖
 
-## Install
+## How to run
 
-1.  {PROJECT_PATH}/stock/ 
-    ```virtualenv env``
-    
-    
-2.  {PROJECT_PATH}/stock/$ 
-    ```pip install -r requirements.txt```
-    >via requirements.txt install library
-
-3.  {PROJECT_PATH}/stock/$ 
-    ```source/env/bin/activate```
-    >enter virtual environment
- 
-4.  add config.json in stock/config.json
-```
-{
-    "SECRET_KEY": "lnv50535!l8ks=0p!=mamr_y)^-3x&91+p-f&f@f63v3k(6c-(",
-    "DB_ENGINE" : "django.db.backends.postgresql_psycopg2",
-    "DB_NAME":  "db_name",
-    "DB_USERNAME": "postgres",
-    "DB_PASSWORD" : "password",
-    "DB_HOST" :"127.0.0.1",
-    "DB_PORT" :"5432"
-}
-```
-
-5.  {PROJECT_PATH}/stock/$ 
-    ```python manage.py runserver```
-    >execute backend server
+* [Run in develop](wiki/develop.md)
+* [Run in Docker](wiki/docker.md)
