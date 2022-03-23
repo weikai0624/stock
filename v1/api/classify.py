@@ -10,9 +10,10 @@ from rest_framework import viewsets
 # Create your views here.
 
 class ClassifyTypeAPI(viewsets.ModelViewSet):
-    serializers = ClassifyTypeSerializer
+    serializer_class = ClassifyTypeSerializer
     queryset = ClassifyType.objects.all()
     permission_classes = [AllowAny]
+    
 
     """
     Example empty viewset demonstrating the standard

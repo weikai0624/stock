@@ -9,8 +9,8 @@ from v1.api.stock_data import DataAPI
 
 
 router = DefaultRouter()
-router.register(r'company', ClassifyTypeAPI, basename='company')
-router.register(r'classifytype', CompanyAPI, basename='classifytype')
+router.register(r'classifytype', ClassifyTypeAPI, basename='company')
+router.register(r'company', CompanyAPI, basename='classifytype')
 router.register(r'data', DataAPI, basename='data')
 
 urlpatterns = [

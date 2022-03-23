@@ -10,7 +10,7 @@ from rest_framework import viewsets
 # Create your views here.
 
 class DataAPI(viewsets.ModelViewSet):
-    serializers = ObjectDataSerializer
+    serializer_class = ObjectDataSerializer
     queryset = ObjectData.objects.all()
     permission_classes = [AllowAny]
 
