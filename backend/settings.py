@@ -24,6 +24,8 @@ if os.path.isfile(CONFIG_PATH):
 else:
     CONFIG = {}
 
+def database_setting(environ_key, config_key, default_value):
+    return os.environ.get(environ_key, CONFIG.get(config_key ,default_value))
 
 
 # Quick-start development settings - unsuitable for production
@@ -35,7 +37,7 @@ SECRET_KEY = CONFIG.get('SECRET_KEY','')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,7 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'v1',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -100,6 +103,16 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+    'default': {
+        'ENGINE':   database_setting('DB_ENGINE', 'DB_ENGINE' ,'django.db.backends.postgresql_psycopg2'),
+        'NAME':     database_setting('POSTGRES_NAME', 'DB_NAME', 'postgres'),
+        'USER':     database_setting('POSTGRES_USER', 'DB_USERNAME', 'username'),
+        'PASSWORD': database_setting('POSTGRES_PASSWORD' ,'DB_PASSWORD' ,'password'),
+        'HOST':     database_setting('POSTGRES_HOST', 'DB_HOST' ,'password'),
+        'PORT':     database_setting('DB_PORT', 'DB_PORT' ,'5432')
+    }
+}
 
 
 # Password validation
@@ -136,7 +149,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
