@@ -10,7 +10,7 @@ from rest_framework import viewsets
 # Create your views here.
 
 class CompanyAPI(viewsets.ModelViewSet):
-    serializers = CompanyProfileSerializer
+    serializer_class = CompanyProfileSerializer
     queryset = CompanyProfile.objects.all()
     permission_classes = [AllowAny]
 
