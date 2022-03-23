@@ -10,6 +10,19 @@ https://finmindtrade.com/
 
 並使用 Pyecharts 進行繪圖
 
+## Use package
+* Framework
+    * [Django](https://www.djangoproject.com/) 
+        * [rest framework](https://www.django-rest-framework.org/)
+        * [drf-yasg](https://drf-yasg.readthedocs.io/en/stable/) swagger
+        <!-- * [celery](https://docs.celeryq.dev/en/stable/index.html) -->
+        <!-- * [redis](https://github.com/redis/redis-py) -->
+
+
+ * Database
+    * [PostgreSQL](https://www.postgresql.org/)
+    * [Redis](https://redis.io/)
+
 ## How to run
 
 * [Run in develop](wiki/develop.md)
