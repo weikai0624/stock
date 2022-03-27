@@ -17,4 +17,6 @@ python manage.py migrate
 echo "Create Seeds"
 python tools/seeds/make_data.py
 
+python manage.py runserver 8008
+
 exec "$@"
