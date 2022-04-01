@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'v1',
+    'celery',
     'rest_framework',
     'corsheaders',
     'drf_yasg'
@@ -92,16 +93,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE':   CONFIG.get('DB_ENGINE' ,'django.db.backends.postgresql_psycopg2'),
-        'NAME':     CONFIG.get('DB_NAME'   , 'postgres'),
-        'USER':     CONFIG.get('DB_USERNAME' ,'username'),
-        'PASSWORD': CONFIG.get('DB_PASSWORD' ,'password'),
-        'HOST':     CONFIG.get('DB_HOST' ,'127.0.0.1'),
-        'PORT':     CONFIG.get('DB_PORT' ,'5432')
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE':   CONFIG.get('DB_ENGINE' ,'django.db.backends.postgresql_psycopg2'),
+#         'NAME':     CONFIG.get('DB_NAME'   , 'postgres'),
+#         'USER':     CONFIG.get('DB_USERNAME' ,'username'),
+#         'PASSWORD': CONFIG.get('DB_PASSWORD' ,'password'),
+#         'HOST':     CONFIG.get('DB_HOST' ,'127.0.0.1'),
+#         'PORT':     CONFIG.get('DB_PORT' ,'5432')
+#     }
+# }
 
 DATABASES = {
     'default': {
@@ -166,3 +167,19 @@ REST_FRAMEWORK = {
     # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     # 'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.IsAdminUser', ),
 }
+
+# Celery
+BROKER_URL = database_setting('BROKER_URL','BROKER_URL','redis://localhost:6379')
+CELERY_RESULT_BACKEND = database_setting('BROKER_URL','BROKER_URL','redis://localhost:6379')
+CELERY_ACCEPT_CONTENT = database_setting('CELERY_ACCEPT_CONTENT','CELERY_ACCEPT_CONTENT',['application/json'])
+CELERY_TASK_SERIALIZER = database_setting('CELERY_TASK_SERIALIZER','CELERY_TASK_SERIALIZER','json')
+CELERY_RESULT_SERIALIZER = database_setting('CELERY_TASK_SCELERY_RESULT_SERIALIZER','CELERY_RESULT_SERIALIZER','json')
+CELERY_TIMEZONE = database_setting('CELERY_TIMEZONE','CELERY_TIMEZONE','Asia/Taipei')
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = database_setting('EMAIL_HOST','EMAIL_HOST','')
+EMAIL_USE_TLS = database_setting('EMAIL_USE_TLS','EMAIL_USE_TLS',True)
+EMAIL_PORT = database_setting('EMAIL_PORT','EMAIL_PORT','')
+EMAIL_HOST_USER = database_setting('EMAIL_HOST_USER','EMAIL_HOST_USER','')
+EMAIL_HOST_PASSWORD = database_setting('EMAIL_HOST_PASSWORD','EMAIL_HOST_PASSWORD','')
