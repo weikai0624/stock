@@ -15,13 +15,14 @@ https://finmindtrade.com/
     * [Django](https://www.djangoproject.com/) 
         * [rest framework](https://www.django-rest-framework.org/)
         * [drf-yasg](https://drf-yasg.readthedocs.io/en/stable/) swagger
-        <!-- * [celery](https://docs.celeryq.dev/en/stable/index.html) -->
-        <!-- * [redis](https://github.com/redis/redis-py) -->
+        * [celery](https://docs.celeryq.dev/en/stable/index.html)
+        * [redis](https://github.com/redis/redis-py)
 
 
  * Database
     * [PostgreSQL](https://www.postgresql.org/)
     * [Redis](https://redis.io/)
+        > for Window download [LINK](https://github.com/MicrosoftArchive/redis/releases)
 
 ## How to run
 
