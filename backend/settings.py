@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'v1',
-    'celery',
+    'celery_app',
     'rest_framework',
     'corsheaders',
     'drf_yasg'
@@ -169,8 +169,8 @@ REST_FRAMEWORK = {
 }
 
 # Celery
-BROKER_URL = database_setting('BROKER_URL','BROKER_URL','redis://localhost:6379')
-CELERY_RESULT_BACKEND = database_setting('BROKER_URL','BROKER_URL','redis://localhost:6379')
+CELERY_BROKER_URL = database_setting('CELERY_BROKER_URL','CELERY_BROKER_URL','redis://localhost:6379')
+CELERY_RESULT_BACKEND = database_setting('CELERY_RESULT_BACKEND','CELERY_RESULT_BACKEND','redis://localhost:6379')
 CELERY_ACCEPT_CONTENT = database_setting('CELERY_ACCEPT_CONTENT','CELERY_ACCEPT_CONTENT',['application/json'])
 CELERY_TASK_SERIALIZER = database_setting('CELERY_TASK_SERIALIZER','CELERY_TASK_SERIALIZER','json')
 CELERY_RESULT_SERIALIZER = database_setting('CELERY_TASK_SCELERY_RESULT_SERIALIZER','CELERY_RESULT_SERIALIZER','json')
@@ -178,8 +178,8 @@ CELERY_TIMEZONE = database_setting('CELERY_TIMEZONE','CELERY_TIMEZONE','Asia/Tai
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = database_setting('EMAIL_HOST','EMAIL_HOST','')
+EMAIL_HOST = database_setting('EMAIL_HOST','EMAIL_HOST','smtp.gmail.com')
+EMAIL_PORT = database_setting('EMAIL_PORT','EMAIL_PORT','587')
 EMAIL_USE_TLS = database_setting('EMAIL_USE_TLS','EMAIL_USE_TLS',True)
-EMAIL_PORT = database_setting('EMAIL_PORT','EMAIL_PORT','')
 EMAIL_HOST_USER = database_setting('EMAIL_HOST_USER','EMAIL_HOST_USER','')
 EMAIL_HOST_PASSWORD = database_setting('EMAIL_HOST_PASSWORD','EMAIL_HOST_PASSWORD','')
