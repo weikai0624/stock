@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'v1',
     'celery_app',
+    'django_celery_results',
+    'django_celery_beat',
     'rest_framework',
     'corsheaders',
     'drf_yasg'
@@ -170,11 +172,13 @@ REST_FRAMEWORK = {
 
 # Celery
 CELERY_BROKER_URL = database_setting('CELERY_BROKER_URL','CELERY_BROKER_URL','redis://localhost:6379')
-CELERY_RESULT_BACKEND = database_setting('CELERY_RESULT_BACKEND','CELERY_RESULT_BACKEND','redis://localhost:6379')
+# CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_BACKEND = database_setting('CELERY_RESULT_BACKEND','CELERY_RESULT_BACKEND','django-db')
 CELERY_ACCEPT_CONTENT = database_setting('CELERY_ACCEPT_CONTENT','CELERY_ACCEPT_CONTENT',['application/json'])
 CELERY_TASK_SERIALIZER = database_setting('CELERY_TASK_SERIALIZER','CELERY_TASK_SERIALIZER','json')
 CELERY_RESULT_SERIALIZER = database_setting('CELERY_TASK_SCELERY_RESULT_SERIALIZER','CELERY_RESULT_SERIALIZER','json')
 CELERY_TIMEZONE = database_setting('CELERY_TIMEZONE','CELERY_TIMEZONE','Asia/Taipei')
+CELERY_TASK_TRACK_STARTED = True
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
