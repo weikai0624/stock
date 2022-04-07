@@ -1,7 +1,7 @@
 # Celery
 
 ## How to Start: 
-* celery -A backend worker -l info
+* celery -A backend.celery worker -l info
 ## Monitor:
-* celery -A backend flower
+* celery -A backend.celery flower
 * http://localhost:5555

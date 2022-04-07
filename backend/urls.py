@@ -23,6 +23,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from celery_app import tasks
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/swagger/') ),
