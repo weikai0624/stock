@@ -1,11 +1,10 @@
 amqp==5.1.0
-APScheduler==3.9.1
 asgiref==3.5.0
 astroid==2.9.3
 async-timeout==4.0.2
 backports.zoneinfo==0.2.1
 billiard==3.6.4.0
-celery==5.2.3
+celery==5.2.6
 certifi==2021.10.8
 charset-normalizer==2.0.10
 click==8.1.2
@@ -25,7 +24,6 @@ django-filter==21.1
 django-timezone-field==4.2.3
 djangorestframework==3.13.1
 drf-yasg==1.20.0
-flower==1.0.0
 humanize==4.0.0
 idna==3.3
 importlib-metadata==4.10.1

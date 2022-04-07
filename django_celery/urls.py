@@ -1,8 +1,8 @@
 from django.shortcuts import redirect
 from django.urls import path, include, re_path
-from celery_app import tasks, views
+from django_celery import tasks, views
 
 urlpatterns = [
     path('test/',views.test_celery, name='test'),
-    path('mail/',views.send_email, name='mail')
+    path('mail/',views.test_send_email, name='mail')
 ]

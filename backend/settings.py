@@ -50,9 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'v1',
-    'celery_app',
+    'django_celery',
     'django_celery_results',
-    'django_celery_beat',
+    # 'django_celery_beat',
     'rest_framework',
     'corsheaders',
     'drf_yasg'
