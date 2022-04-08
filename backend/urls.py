@@ -23,13 +23,14 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+
 urlpatterns = [
     path('', RedirectView.as_view(url='/swagger/') ),
     path('admin/', admin.site.urls),
     path('v1/',include('v1.urls')),
     path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/logout/', views.LogoutView.as_view() ),
-
+    path('celery/',include('django_celery.urls'))
 ]
 
 schema_view = get_schema_view(

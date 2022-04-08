@@ -53,6 +53,10 @@
     ```python tools/seeds/make_data.py```
     > Create seeds
 
-9.  {PROJECT_PATH}/stock/$ 
+9.  {PROJECT_PATH}/stock/$ ```celery -A backend worker -l info```
+    > Open celery
+
+
+10.  {PROJECT_PATH}/stock/$ 
     ```python manage.py runserver```
     >execute backend server
