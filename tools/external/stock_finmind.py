@@ -59,7 +59,7 @@ class FinMind():
 
 
 if __name__ == "__main__":
-    token = ""
-    data = FinMind(token).stock_price_get()
-    with open (file=os.path.join('sample_data',"ALL.json"),mode='w',encoding="UTF-8") as F :
+    token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRlIjoiMjAyMi0wNC0wNiAxNDowMDo0MyIsInVzZXJfaWQiOiJ3ZWlrYWkiLCJpcCI6IjYxLjIxNi4xMzAuOCJ9.sK83eAUbusItPIsOFoR6YAQCD0ALHmVIyB2_y41tuCU"
+    data = FinMind(token).stock_price_get('2330','2022-03-28')
+    with open (file=os.path.join('sample_data',"20220406_test.json"),mode='w',encoding="UTF-8") as F :
         json.dump(data , F)
