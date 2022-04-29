@@ -17,6 +17,7 @@ coreschema==0.0.4
 Deprecated==1.2.13
 Django==3.2.9
 django-apscheduler==0.6.2
+django-celery-beat==2.2.1
 django-celery-results==2.3.0
 django-cors-headers==3.11.0
 django-filter==21.1

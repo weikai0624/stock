@@ -6,21 +6,15 @@ import json
 import django
 from datetime import datetime
 
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
-django.setup()
-
 from django.conf import settings
 from v1.models import UserProfile,GroupProfile,Project,CompanyProfile,ObjectData,ClassifyType
 from django.contrib.auth.models import User,Group
 
-from external.stock_finmind import FinMind
+# from external.stock_finmind import FinMind
 
 
-CONFIG = settings.CONFIG
-FIN_TOKEN = settings.CONFIG.get("FIN_TOKEN",'')
+# CONFIG = settings.CONFIG
+# FIN_TOKEN = settings.CONFIG.get("FIN_TOKEN",'')
 
 def read_json(path):
     with open (path, 'r') as F :
@@ -100,10 +94,13 @@ def create_users():
     User.objects.create_superuser(username='weikai', password='weikai', email=None)
 
 def Main():
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
+    django.setup()
     delete_seeds(True)
     create_seeds(True)
 
 if __name__ == "__main__":
     Main()
-
     pass
