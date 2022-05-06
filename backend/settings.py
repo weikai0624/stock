@@ -194,3 +194,12 @@ EMAIL_PORT = database_setting('EMAIL_PORT','EMAIL_PORT','587')
 EMAIL_USE_TLS = database_setting('EMAIL_USE_TLS','EMAIL_USE_TLS',True)
 EMAIL_HOST_USER = database_setting('EMAIL_HOST_USER','EMAIL_HOST_USER','')
 EMAIL_HOST_PASSWORD = database_setting('EMAIL_HOST_PASSWORD','EMAIL_HOST_PASSWORD','')
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    "send_email_report": {
+        "task": "django_celery.auto_tasks.per_test",
+        "schedule": crontab(minute="*/1"),
+    },
+}
