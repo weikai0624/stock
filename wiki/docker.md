@@ -1,6 +1,8 @@
 # Package
 
 Use [Docker](https://www.docker.com/) to package all the project.
+[Docker celery](https://soshace.com/dockerizing-django-with-postgres-redis-and-celery/)
+[Docker celery](https://testdriven.io/blog/django-celery-periodic-tasks/)
 
 1. Download all related softwares
     * [Docker](https://www.docker.com/)

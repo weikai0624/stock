@@ -4,12 +4,16 @@ services:
         ports:
             - "8000:8000"
         environment:
+            - CELERY_BROKER=redis://redis:6379
+            - CELERY_RESULT_BACKEND=redis://redis:6379
             - POSTGRES_NAME=postgres
             - POSTGRES_USER=username
             - POSTGRES_PASSWORD=password
             - POSTGRES_HOST=db
         depends_on:
-            - db    
+            - db
+            - celery_worker
+            - redis
     db:
         image: postgres
         volumes:
@@ -19,5 +23,19 @@ services:
             - POSTGRES_USER=username
             - POSTGRES_PASSWORD=password
             - POSTGRES_HOST=db
+    redis:
+        container_name: redis_container
+        image: redis:alpine 
+        restart: always
+
+    celery_worker:
+        build: .
+        command: celery -A backend.celery worker --pool=solo -l info
+        environment:
+            - CELERY_BROKER=redis://redis:6379
+            - CELERY_RESULT_BACKEND=redis://redis:6379
+        depends_on:
+            - redis
+
 volumes:
     pg_data:
