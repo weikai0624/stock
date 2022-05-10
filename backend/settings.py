@@ -179,7 +179,7 @@ CELERY_BROKER_URL = database_setting('CELERY_BROKER_URL','CELERY_BROKER_URL','re
 # CELERY_TIMEZONE = database_setting('CELERY_TIMEZONE','CELERY_TIMEZONE','Asia/Taipei')
 # CELERY_TASK_TRACK_STARTED = True
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
+# CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
