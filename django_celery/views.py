@@ -15,7 +15,7 @@ def send_email(request,*args,**kwargs):
     recipient_email = request.GET.get('recipient_email',None)
     recipient_name = request.GET.get('recipient_name',None)
     if recipient_email != None and recipient_name != None:
-        res=tasks.send_email.delay('weikai@fucotech.com.tw','WEIKAI')
+        res=tasks.send_email.delay(recipient_email,recipient_name)
         result = AsyncResult(res.task_id)
         print('send_email',result)
         return JsonResponse({'status':result.status,'task_id':result.task_id})
