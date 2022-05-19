@@ -35,7 +35,10 @@ def database_setting(environ_key, config_key, default_value):
 SECRET_KEY = CONFIG.get('SECRET_KEY','')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
+if 'DYNO' in os.environ:
+    DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -59,6 +62,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -104,17 +108,21 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #         'PORT':     CONFIG.get('DB_PORT' ,'5432')
 #     }
 # }
-
-DATABASES = {
-    'default': {
-        'ENGINE':   database_setting('DB_ENGINE', 'DB_ENGINE' ,'django.db.backends.postgresql_psycopg2'),
-        'NAME':     database_setting('POSTGRES_NAME', 'DB_NAME', 'postgres'),
-        'USER':     database_setting('POSTGRES_USER', 'DB_USERNAME', 'username'),
-        'PASSWORD': database_setting('POSTGRES_PASSWORD' ,'DB_PASSWORD' ,'password'),
-        'HOST':     database_setting('POSTGRES_HOST', 'DB_HOST' ,'password'),
-        'PORT':     database_setting('DB_PORT', 'DB_PORT' ,'5432')
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE':   database_setting('DB_ENGINE', 'DB_ENGINE' ,'django.db.backends.postgresql_psycopg2'),
+            'NAME':     database_setting('POSTGRES_NAME', 'DB_NAME', 'postgres'),
+            'USER':     database_setting('POSTGRES_USER', 'DB_USERNAME', 'username'),
+            'PASSWORD': database_setting('POSTGRES_PASSWORD' ,'DB_PASSWORD' ,'password'),
+            'HOST':     database_setting('POSTGRES_HOST', 'DB_HOST' ,'password'),
+            'PORT':     database_setting('DB_PORT', 'DB_PORT' ,'5432')
+        }
     }
-}
+else:
+    import dj_database_url
+    DATABASES = {'default': dj_database_url.config()}
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Password validation
@@ -152,6 +160,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

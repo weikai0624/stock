@@ -1,8 +1,11 @@
 services:
     web:
         build: .
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/stock
         ports:
-            - "8000:8000"
+            - 8000:8000
         environment:
             - CELERY_BROKER=redis://redis:6379
             - CELERY_RESULT_BACKEND=redis://redis:6379
@@ -15,7 +18,8 @@ services:
             - celery_worker
             - redis
     db:
-        image: postgres
+        image: postgres:latest
+        restart: always
         volumes:
             - pg_data:/var/lib/postgresql/data
         environment:
@@ -25,7 +29,7 @@ services:
             - POSTGRES_HOST=db
     redis:
         container_name: redis_container
-        image: redis:alpine 
+        image: redis:latest
         restart: always
 
     celery_worker:
