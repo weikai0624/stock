@@ -36,8 +36,7 @@ services:
         build: .
         command: celery -A backend.celery worker --pool=solo -l info
         environment:
-            - CELERY_BROKER=redis://redis:6379
-            - CELERY_RESULT_BACKEND=redis://redis:6379
+            - REDIS_URL=redis://redis:6379
         depends_on:
             - redis
 
