@@ -17,3 +17,5 @@ from backend.settings import DEBUG
 if not DEBUG:
     from dj_static import Cling
     application = Cling(get_wsgi_application())
+else:
+    application = get_wsgi_application()
