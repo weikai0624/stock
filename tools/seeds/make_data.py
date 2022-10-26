@@ -61,6 +61,7 @@ def create_company(compony_info):
             "name": i.get("stock_name",""),
             "symbol": i.get("stock_id",""),
             "description":  i.get("stock_name","") + i.get("stock_id",""),
+            "major_type": ClassifyType.objects.get(name=i['industry_category'])
         }
         check.append(i['stock_name'])
         change_data_key.append(CompanyProfile(**data))
