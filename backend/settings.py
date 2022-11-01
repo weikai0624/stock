@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'v1',
+    'demo_views',
     'django_celery',
     'django_celery_results',
     'rest_framework',

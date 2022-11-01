@@ -30,6 +30,7 @@ urlpatterns = [
     path('v1/',include('v1.urls')),
     path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/logout/', views.LogoutView.as_view() ),
+    path('demo/',include('demo_views.urls')),
     path('celery/',include('django_celery.urls'))
 ]
 
