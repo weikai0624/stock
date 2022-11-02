@@ -45,3 +45,21 @@ class SendEmailViewSet(generics.GenericAPIView):
             return Response({'status':result.status,'task_id':result.task_id})
         else:
             return Response({'status':None,'task_id':None})
+
+class CeleryStatus(generics.GenericAPIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    @swagger_auto_schema(
+        operation_summary='查詢celery 狀態',
+        operation_description='查詢celery 狀態',
+        manual_parameters=[
+        ]
+    )
+
+    def get(self, request, celery_id, format=None):
+        result = AsyncResult(celery_id)
+        print(celery_id)
+        # result = "2"
+        print('send_email',result)
+        # return Response({'status':result,'task_id':result})
+        return Response({'status':result.status,'task_id':result.task_id})
