@@ -14,6 +14,23 @@ from pyecharts.charts import Bar, Pie, Kline, Line
 from datetime import datetime
 from pytz import timezone
 
+def pie(type_amount:int=50):
+    classify_type_list = ClassifyType.objects.all()[0:7].values_list('name','id')
+    classify_type_zip = list( zip(*classify_type_list))
+    ids_list = classify_type_zip[1]
+    counts_list = [ len(CompanyProfile.objects.filter(major_type=i)) for i in ids_list]
+    classify_type_company_list = list(zip(list( zip(*classify_type_list))[0], counts_list ))
+    classify_type_company_list.sort(key=lambda x: (x[1]),reverse=True)
+    c = (
+        Pie()
+            .add("", classify_type_company_list[0:int(type_amount)])
+            # .set_colors(["blue", "green", "yellow", "red", "pink", "orange", "purple"])\
+            .set_global_opts(title_opts=opts.TitleOpts(title="公司類型"))
+            .set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}間"))
+            .dump_options_with_quotes()
+    )
+    return c
+
 def kline(symbol):
     tz=timezone('Asia/Taipei') 
     datetime_format = "%Y%m%d %H%M"
