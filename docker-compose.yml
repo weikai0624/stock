@@ -7,8 +7,7 @@ services:
         ports:
             - 8000:8000
         environment:
-            - CELERY_BROKER=redis://redis:6379
-            - CELERY_RESULT_BACKEND=redis://redis:6379
+            - REDIS_URL=redis://redis:6379
             - POSTGRES_NAME=postgres
             - POSTGRES_USER=username
             - POSTGRES_PASSWORD=password
@@ -48,3 +47,4 @@ services:
 
 volumes:
     pg_data:
+    redis_data:
