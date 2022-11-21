@@ -29,7 +29,15 @@
     ```pip install -r requirements.txt```
     >via requirements.txt install library
 
-5.  add config.json in {PROJECT_PATH}/stock/[config.json](..\config.json)
+5.  setting environments_setting
+    
+    they have the method to set:
+
+    1. add config.json in {PROJECT_PATH}/stock/[config.json](..\config.json)
+
+    or
+
+    2. add environments_setting in system environments (for depoly and docker)
 
 ```
 {

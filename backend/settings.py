@@ -24,24 +24,22 @@ if os.path.isfile(CONFIG_PATH):
 else:
     CONFIG = {}
 
-def database_setting(environ_key, config_key, default_value):
-    return os.environ.get(environ_key, CONFIG.get(config_key ,default_value))
+def environments_setting(environ_key, default_value):
+    return os.environ.get(environ_key, CONFIG.get(environ_key ,default_value))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = CONFIG.get('SECRET_KEY','')
+SECRET_KEY = environments_setting('SECRET_KEY','')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
-if 'DYNO' in os.environ:
-    DEBUG = False
+DEBUG = environments_setting('DEBUG','').lower() in [ True,'true', 't', '1']
 
-ALLOWED_HOSTS = ['*']
-
+# ALLOWED_HOSTS split by ','
+ALLOWED_HOSTS = environments_setting('ALLOWED_HOSTS','*').split(',')
 
 # Application definition
 
@@ -99,31 +97,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE':   CONFIG.get('DB_ENGINE' ,'django.db.backends.postgresql_psycopg2'),
-#         'NAME':     CONFIG.get('DB_NAME'   , 'postgres'),
-#         'USER':     CONFIG.get('DB_USERNAME' ,'username'),
-#         'PASSWORD': CONFIG.get('DB_PASSWORD' ,'password'),
-#         'HOST':     CONFIG.get('DB_HOST' ,'127.0.0.1'),
-#         'PORT':     CONFIG.get('DB_PORT' ,'5432')
-#     }
-# }
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE':   database_setting('DB_ENGINE', 'DB_ENGINE' ,'django.db.backends.postgresql_psycopg2'),
-            'NAME':     database_setting('POSTGRES_NAME', 'DB_NAME', 'postgres'),
-            'USER':     database_setting('POSTGRES_USER', 'DB_USERNAME', 'username'),
-            'PASSWORD': database_setting('POSTGRES_PASSWORD' ,'DB_PASSWORD' ,'password'),
-            'HOST':     database_setting('POSTGRES_HOST', 'DB_HOST' ,'password'),
-            'PORT':     database_setting('DB_PORT', 'DB_PORT' ,'5432')
-        }
+DATABASES = {
+    'default': {
+        'ENGINE':   environments_setting('DB_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+        'NAME':     environments_setting('DB_NAME', 'postgres'),
+        'USER':     environments_setting('DB_USERNAME', 'username'),
+        'PASSWORD': environments_setting('DB_PASSWORD', 'password'),
+        'HOST':     environments_setting('DB_HOST', 'password'),
+        'PORT':     environments_setting('DB_PORT', '5432')
     }
-else:
-    import dj_database_url
-    DATABASES = {'default': dj_database_url.config()}
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+}
 
 
 # Password validation
@@ -180,16 +163,8 @@ REST_FRAMEWORK = {
 }
 
 # Celery
-CELERY_BROKER_URL = database_setting('REDIS_URL','CELERY_BROKER_URL','redis://localhost:6379')
-CELERY_RESULT_BACKEND = database_setting('REDIS_URL','CELERY_RESULT_BACKEND','django-db')
-# CELERY_ACCEPT_CONTENT = database_setting('CELERY_ACCEPT_CONTENT','CELERY_ACCEPT_CONTENT',['application/json'])
-# CELERY_TASK_SERIALIZER = database_setting('CELERY_TASK_SERIALIZER','CELERY_TASK_SERIALIZER','json')
-# CELERY_RESULT_SERIALIZER = database_setting('CELERY_TASK_SCELERY_RESULT_SERIALIZER','CELERY_RESULT_SERIALIZER','json')
-# CELERY_TIMEZONE = database_setting('CELERY_TIMEZONE','CELERY_TIMEZONE','Asia/Taipei')
-# CELERY_TASK_TRACK_STARTED = True
-
-# CELERY_BROKER_URL = 'redis://localhost:6379'
-# CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = environments_setting('CELERY_BROKER_URL','redis://localhost:6379')
+CELERY_RESULT_BACKEND = environments_setting('CELERY_RESULT_BACKEND','django-db')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -197,8 +172,8 @@ CELERY_TIMEZONE = 'Asia/Taipei'
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = database_setting('EMAIL_HOST','EMAIL_HOST','smtp.gmail.com')
-EMAIL_PORT = database_setting('EMAIL_PORT','EMAIL_PORT','587')
-EMAIL_USE_TLS = database_setting('EMAIL_USE_TLS','EMAIL_USE_TLS',True)
-EMAIL_HOST_USER = database_setting('EMAIL_HOST_USER','EMAIL_HOST_USER','')
-EMAIL_HOST_PASSWORD = database_setting('EMAIL_HOST_PASSWORD','EMAIL_HOST_PASSWORD','')
+EMAIL_HOST = environments_setting('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = environments_setting('EMAIL_PORT', '587')
+EMAIL_USE_TLS = environments_setting('EMAIL_USE_TLS', True)
+EMAIL_HOST_USER = environments_setting('EMAIL_HOST_USER', 'username@domain.com')
+EMAIL_HOST_PASSWORD = environments_setting('EMAIL_HOST_PASSWORD','password')
