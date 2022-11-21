@@ -7,11 +7,17 @@ services:
         ports:
             - 8000:8000
         environment:
-            - REDIS_URL=redis://redis:6379
-            - POSTGRES_NAME=postgres
-            - POSTGRES_USER=username
-            - POSTGRES_PASSWORD=password
-            - POSTGRES_HOST=db
+            - CELERY_BROKER_URL=redis://redis:6379
+            - CELERY_RESULT_BACKEND=redis://redis:6379
+            - DB_NAME=postgres
+            - DB_USERNAME=username
+            - DB_PASSWORD=password
+            - DB_HOST=db
+            - DB_PORT=5432
+            - EMAIL_HOST=smtp.gmail.com
+            - EMAIL_PORT=587
+            - EMAIL_HOST_USER=username@domain.com
+            - EMAIL_HOST_PASSWORD=password
         depends_on:
             - db
             - celery_worker
@@ -32,16 +38,19 @@ services:
         restart: always
     flower:
         image: mher/flower:0.9.7
-        command: ['flower', '--broker=redis://redis:6379', '--port=5555']
+        environment:
+            - CELERY_BROKER_URL=redis://redis:6379
+            - FLOWER_PORT=5555
         ports:
             - 5555:5555
         depends_on:
-        - redis
+            - redis
     celery_worker:
         build: .
         command: celery -A backend.celery worker --pool=solo -l info
         environment:
-            - REDIS_URL=redis://redis:6379
+            - CELERY_BROKER_URL=redis://redis:6379
+            - CELERY_RESULT_BACKEND=redis://redis:6379
         depends_on:
             - redis
 
