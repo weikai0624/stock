@@ -54,7 +54,7 @@
     > Create seeds
 
 9.  {PROJECT_PATH}/stock/$ ```celery -A backend worker -l info```
-    > Open celery
+    > [Open celery](wiki\celery.md)
 
 
 10.  {PROJECT_PATH}/stock/$ 
