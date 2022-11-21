@@ -52,4 +52,3 @@
 
 * [Run in develop](wiki/develop.md)
 * [Run in Docker](wiki/docker.md)
-* [Depoly in Heroku](wiki\heroku.md)
