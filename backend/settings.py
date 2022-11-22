@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 import json
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +41,8 @@ DEBUG = environments_setting('DEBUG','').lower() in [ True,'true', 't', '1']
 
 # ALLOWED_HOSTS split by ','
 ALLOWED_HOSTS = environments_setting('ALLOWED_HOSTS','*').split(',')
+
+CSRF_TRUSTED_ORIGINS = environments_setting('CSRF_TRUSTED_ORIGINS','').split(',')
 
 # Application definition
 
@@ -97,15 +100,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE':   environments_setting('DB_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+#         'NAME':     environments_setting('DB_NAME', 'postgres'),
+#         'USER':     environments_setting('DB_USERNAME', 'username'),
+#         'PASSWORD': environments_setting('DB_PASSWORD', 'password'),
+#         'DATABASE_URL': environments_setting('DATABASE_URL', '')
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE':   environments_setting('DB_ENGINE', 'django.db.backends.postgresql_psycopg2'),
-        'NAME':     environments_setting('DB_NAME', 'postgres'),
-        'USER':     environments_setting('DB_USERNAME', 'username'),
-        'PASSWORD': environments_setting('DB_PASSWORD', 'password'),
-        'HOST':     environments_setting('DB_HOST', 'password'),
-        'PORT':     environments_setting('DB_PORT', '5432')
-    }
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
 }
 
 
