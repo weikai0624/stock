@@ -3,10 +3,10 @@
 app = "kk-stock"
 kill_signal = "SIGINT"
 kill_timeout = 5
-processes = []
 
-[deploy]
-  release_command = "python manage.py migrate"
+[processes]
+web = "gunicorn --bind :8000 --workers 2 backend.wsgi"
+worker = "celery -A backend.celery worker --pool=solo -l info"
 
 [env]
   PORT = "8000"
@@ -18,7 +18,7 @@ processes = []
 [[services]]
   http_checks = []
   internal_port = 8000
-  processes = ["app"]
+  processes = ["web"]
   protocol = "tcp"
   script_checks = []
 

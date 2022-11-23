@@ -100,18 +100,21 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE':   environments_setting('DB_ENGINE', 'django.db.backends.postgresql_psycopg2'),
-#         'NAME':     environments_setting('DB_NAME', 'postgres'),
-#         'USER':     environments_setting('DB_USERNAME', 'username'),
-#         'PASSWORD': environments_setting('DB_PASSWORD', 'password'),
-#         'DATABASE_URL': environments_setting('DATABASE_URL', '')
-#     }
-# }
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
-}
+if not os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': {
+            'ENGINE':   environments_setting('DB_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+            'NAME':     environments_setting('DB_NAME', 'postgres'),
+            'USER':     environments_setting('DB_USERNAME', 'username'),
+            'PASSWORD': environments_setting('DB_PASSWORD', 'password'),
+            'HOST':     environments_setting('DB_HOST', '127.0.0.1'),
+            'PORT':     environments_setting('DB_PORT', '5432')
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+    }
 
 
 # Password validation
@@ -182,3 +185,4 @@ EMAIL_PORT = environments_setting('EMAIL_PORT', '587')
 EMAIL_USE_TLS = environments_setting('EMAIL_USE_TLS', True)
 EMAIL_HOST_USER = environments_setting('EMAIL_HOST_USER', 'username@domain.com')
 EMAIL_HOST_PASSWORD = environments_setting('EMAIL_HOST_PASSWORD','password')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

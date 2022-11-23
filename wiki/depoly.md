@@ -4,7 +4,8 @@
 
 reference
 *  [https://testdriven.io/blog/django-fly/](https://testdriven.io/blog/django-fly/)
-* [https://github.com/tomwojcik/django-fly.io-example-project](https://github.com/tomwojcik/django-fly.io-example-project)
+*  [https://github.com/tomwojcik/django-fly.io-example-project](https://github.com/tomwojcik/django-fly.io-example-project)
+*  [https://fly.io/docs/reference/redis/](https://fly.io/docs/reference/redis/)
 
 
 ### requirements
@@ -30,12 +31,19 @@ reference
   Hostname:    kapp_name-db.internal
   Proxy Port:  5432
   PG Port: 5433
-```
-  The following secret was added to kk-stock:
-  DATABASE_URL=postgres://app_name:....app_name-db.internal:5432/app_name
-```
+    ```
+    The following secret was added to kk-stock:
+    DATABASE_URL=postgres://app_name:....app_name-db.internal:5432/app_name
+    ```
 
   launch success
+
+1. ```$ flyctl redis create```
+    ```
+    Your Upstash Redis database redis_name is ready.
+    Apps in the personal org can connect to at redis://default:XXXX.upstash.io
+    If you have redis-cli installed, use fly redis connect to connect to your database.
+    ```
 
 1. ```$ flyctl apps list```
     > to look your app
@@ -58,6 +66,10 @@ reference
     ```$ flyctl secrets set DEBUG='1'```
 
     ```$ flyctl secrets set ALLOWED_HOSTS='*'```
+
+    ```$ flyctl secrets set CELERY_BROKER_URL='redis://default:XXXX.upstash.io'```
+
+    ```$ flyctl secrets set CELERY_RESULT_BACKEND='redis://default:XXXX.upstash.io'```
 
     ```$ flyctl secrets set CSRF_TRUSTED_ORIGINS='https://app_name.fly.dev'```
 
@@ -82,3 +94,21 @@ reference
 
 1. ```$ fly logs```
     > watch logs
+
+
+
+
+
+
+
+
+### problem
+
+1. non interactive (in Windows)
+    ```
+    $fly redis create
+    automatically selected personal organization: xxxxx@gmail.com
+    Error prompt: non interactive
+    ```
+    use 
+    [Windows Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-us&gl=us) to ```$ fly redis create``` again
