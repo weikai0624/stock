@@ -12,5 +12,12 @@ RUN pip install -r requirements.txt
 # VOLUME /stock
 # EXPOSE 8000
 
-# ENTRYPOINT [ "/bin/bash", "docker-entrypoint.sh" ]
+
+ENTRYPOINT [ "/bin/bash", "docker-entrypoint.sh" ]
 # CMD python manage.py runserver 0.0.0.0:8000
+
+# expose port 8000
+# EXPOSE 8000
+
+# CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "backend.wsgi:application"]
+

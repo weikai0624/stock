@@ -1,18 +1,23 @@
 services:
     web:
         build: .
-        command: python manage.py runserver 0.0.0.0:8000
+        command: gunicorn --bind :8000 --workers 2 backend.wsgi
         volumes:
             - .:/stock
         ports:
             - 8000:8000
         environment:
-            - CELERY_BROKER=redis://redis:6379
+            - CELERY_BROKER_URL=redis://redis:6379
             - CELERY_RESULT_BACKEND=redis://redis:6379
-            - POSTGRES_NAME=postgres
-            - POSTGRES_USER=username
-            - POSTGRES_PASSWORD=password
-            - POSTGRES_HOST=db
+            - DB_NAME=postgres
+            - DB_USERNAME=username
+            - DB_PASSWORD=password
+            - DB_HOST=db
+            - DB_PORT=5432
+            - EMAIL_HOST=smtp.gmail.com
+            - EMAIL_PORT=587
+            - EMAIL_HOST_USER=username@domain.com
+            - EMAIL_HOST_PASSWORD=password
         depends_on:
             - db
             - celery_worker
@@ -31,15 +36,24 @@ services:
         container_name: redis_container
         image: redis:latest
         restart: always
-
+    flower:
+        image: mher/flower:0.9.7
+        environment:
+            - CELERY_BROKER_URL=redis://redis:6379
+            - FLOWER_PORT=5555
+        ports:
+            - 5555:5555
+        depends_on:
+            - redis
     celery_worker:
         build: .
         command: celery -A backend.celery worker --pool=solo -l info
         environment:
-            - CELERY_BROKER=redis://redis:6379
+            - CELERY_BROKER_URL=redis://redis:6379
             - CELERY_RESULT_BACKEND=redis://redis:6379
         depends_on:
             - redis
 
 volumes:
     pg_data:
+    redis_data:

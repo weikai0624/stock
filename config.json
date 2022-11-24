@@ -5,5 +5,9 @@
     "DB_USERNAME": "stock",
     "DB_PASSWORD" : "stock",
     "DB_HOST" :"127.0.0.1",
-    "DB_PORT" :"5432"
+    "DB_PORT" :"5432",
+    "EMAIL_HOST":"smtp.gmail.com",
+    "EMAIL_PORT":"587",
+    "EMAIL_HOST_USER":"{EMAIL_USER}",
+    "EMAIL_HOST_PASSWORD":"{EMAIL_PASSWORD}"
 }
