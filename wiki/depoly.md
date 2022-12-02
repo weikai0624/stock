@@ -38,6 +38,14 @@ reference
 
   launch success
 
+1. if database does not create, ```$ flyctl pg create```
+    ```
+    ? Choose an app name (leave blank to generate one): kk-stock-db
+    automatically selected personal organization: weikai860624@gmail.com
+    ? Select region: Hong Kong, Hong Kong (hkg)
+    ? Select configuration: Development - Single node, 1x shared CPU, 256MB RAM, 1GB disk
+    ```
+
 1. ```$ flyctl redis create```
     ```
     Your Upstash Redis database redis_name is ready.
@@ -66,6 +74,8 @@ reference
     ```$ flyctl secrets set DEBUG='1'```
 
     ```$ flyctl secrets set ALLOWED_HOSTS='*'```
+
+    ```$ flyctl secrets set DATABASE_URL='postgres://postgres:password@kk-stock-db.internal:5432/kk-stock'```
 
     ```$ flyctl secrets set CELERY_BROKER_URL='redis://default:XXXX.upstash.io'```
 
